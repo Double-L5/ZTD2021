@@ -19,9 +19,10 @@ public class Main extends ApplicationAdapter {
 	// CONTROL VARIABLES
 
 	// GAME LISTS
-	ArrayList<Zombie> zombies = new ArrayList<Zombie>();
-	ArrayList<Cannon> cannons = new ArrayList<Cannon>();
-	ArrayList<Button> buttons = new ArrayList<Button>();
+	 static ArrayList<Zombie> zombies = new ArrayList<Zombie>();
+	 static ArrayList<Cannon> cannons = new ArrayList<Cannon>();
+	static ArrayList<Button> buttons = new ArrayList<Button>();
+	static ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 
 
 	@Override
@@ -43,6 +44,7 @@ public class Main extends ApplicationAdapter {
 		for(Zombie z : zombies) z.draw(batch);
 		for(Cannon c : cannons) c.draw(batch);
 		for(Button b : buttons) b.draw(batch);
+		for(Bullet b : bullets) b.draw(batch);
 		//zombie.draw(batch);
 
 		batch.end();
@@ -54,19 +56,23 @@ public class Main extends ApplicationAdapter {
 		for(Zombie z : zombies) z.update();
 		for(Cannon c : cannons) c.update();
 		for(Button b : buttons) b.update();
+		for(Bullet b : bullets) b.update();
 		housekeeping();
 	}
 
 	void tap() {
 		if(Gdx.input.justTouched()){
 			int x = Gdx.input.getX(), y = Gdx.graphics.getHeight()-Gdx.input.getY();
+			System.out.println(1);
 			for(Cannon c:cannons) if(c.gethitbox().contains(x,y)) return;
+			System.out.println(2);
 			if(buildable (x,y)) cannons.add(new Cannon("super",x,y));
+			System.out.println(3);
 
 
 		}
 	}
-	boolean buildable(int x,int y){ return (x<1000 && (y<200 || y<300)); }
+	boolean buildable(int x,int y){ return (x<1000 && ((y<200 || y>300) && y<500)); }
 
 	void setup(){
 		Tables.init();
@@ -80,6 +86,7 @@ public class Main extends ApplicationAdapter {
 	}
 	void housekeeping(){
 		for(Zombie z : zombies) if(!z.active) { zombies.remove(z); break; }
+		for(Bullet b : bullets) if(!b.active) { bullets.remove(b); break; }
 
 	}
 	void spawn_zombies() {

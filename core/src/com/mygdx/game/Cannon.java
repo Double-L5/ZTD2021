@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Cannon {
     int x,y,w,h;
+    int counter =0,delay=30;
     float angle;
     String type;
 
@@ -22,12 +23,21 @@ public class Cannon {
     void draw(SpriteBatch batch){
         batch.draw(Tables.cannon_resources.get(type) == null ? resources.cannon : Tables.cannon_resources.get(type), x,y);
     }
-    void update(){
-    angle += 10f;
+    void update() {
+        angle += 10f;
+        if (counter++ > delay) {
+            if (!Main.zombies.isEmpty()) {
+                fire();
+                counter=0;
+            }
+        }
     }
  int gridlock(int n){
         return ((int)(n+25)/50) *50;
 }
 Rectangle gethitbox(){return new Rectangle(x,y,w,h);}
+    void fire(){
+        Main.bullets.add(new Bullet("bbb", x+w/2,y+h/2));
+    }
 
 }

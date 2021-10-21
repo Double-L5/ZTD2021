@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import java.util.ResourceBundle;
 
 public class Zombie {
-    int x, y,w,h,speed;
+    int x, y,w,h,speed,hp;
     String type;
     boolean active = true;
     // ANIMATION VARIABLES
@@ -24,6 +24,7 @@ public class Zombie {
         this.x=x;
         this.y=y;
         this.speed = speed;
+        hp=5;
         rows = 1;
         cols=4;
         w= Tables.zombie_resources.get(type) == null ? resources.zombie.getWidth() / cols : Tables.zombie_resources.get(type).getWidth() / cols;
@@ -42,7 +43,7 @@ public class Zombie {
 
         x -= speed;
 
-        active = x+w>0;
+        active = x+w>0 && hp>0;
     }
     void init_animations(){
         // split texture into idivisual cells

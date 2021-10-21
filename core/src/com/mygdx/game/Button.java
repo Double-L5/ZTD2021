@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Button {
     int x,y,w,h;
+
     float angle;
     String type;
 
@@ -15,6 +16,7 @@ public class Button {
         w= Tables.button_resources.get(type) == null ? 50 :  Tables.button_resources.get(type).getWidth();
         h=Tables.button_resources.get(type) == null ? 50 : Tables.button_resources.get(type).getHeight();;
         angle = 0f;
+
     }
     void draw(SpriteBatch batch){
 
