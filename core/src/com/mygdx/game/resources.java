@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
 public class resources {
@@ -18,6 +19,12 @@ public class resources {
     static Texture button_pause = new Texture(Gdx.files.internal("pause.png"));
     static Texture button_start = new Texture(Gdx.files.internal("startButton.png"));
     static Texture button_exit = new Texture(Gdx.files.internal("exitButton.png"));
+    static Texture locked = new Texture(Gdx.files.internal("locked.png"));
+    static Texture selected = new Texture(Gdx.files.internal("border.png"));
+    static Texture button_close = new Texture(Gdx.files.internal("x.png"));
+    static Texture tooltip_bg = new Texture(Gdx.files.internal("ttbg.png"));
+    static Texture red_bar = new Texture(Gdx.files.internal("red_bar.png"));
+    static Texture green_bar = new Texture(Gdx.files.internal("green_bar.png"));
 
     // TODO: Cannons
     static Texture cannon = new Texture(Gdx.files.internal("Cannon.png"));
@@ -38,5 +45,8 @@ public class resources {
 
     // TODO: Bullets
     static Texture bullet = new Texture (Gdx.files.internal("bullet.png"));
+
+    //TODO: Sounds
+    static Sound sfx_bullet= Gdx.audio.newSound(Gdx.files.internal("Bullet.mp3"));
 
 }

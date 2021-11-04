@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Button {
     int x,y,w,h;
-
+boolean locked = true,selected =false;
     float angle;
     String type;
 
@@ -21,6 +21,12 @@ public class Button {
     void draw(SpriteBatch batch){
 
         batch.draw((Tables.button_resources.get(type) == null ? resources.button_cannon : Tables.button_resources.get(type)), x,y);
+        if(locked){
+            batch.draw(resources.locked,x,y);
+        }
+        if(selected){
+            batch.draw(resources.selected,x-7,y-7);
+        }
     }
     void update(){
         angle += 10f;
