@@ -21,6 +21,7 @@ public class Bullet {
             dt=0;
             md=300;
           angle =   calc_angle();
+
         }
         void draw(SpriteBatch batch){
 

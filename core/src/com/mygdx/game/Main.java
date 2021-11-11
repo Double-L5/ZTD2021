@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Tooltip;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
@@ -62,35 +63,54 @@ String cannon_type;
 	}
 
 	void tap() {
-		if(Gdx.input.justTouched()){
-			int x = Gdx.input.getX(), y = Gdx.graphics.getHeight()-Gdx.input.getY();
-			for(Button b:buttons) if(b.gethitbox().contains(x,y))
-			{ if (b.locked)
-				b.locked = false;
+		if (Gdx.input.justTouched()) {
+			int x = Gdx.input.getX(), y = Gdx.graphics.getHeight() - Gdx.input.getY();
 
-				else{
-				cannon_type = b.type;
-				deselect();
-				b.selected = true;
+			for (Button b : buttons) {
+
+
+				if (b.gethitbox().contains(x, y)) {
+					if (b.locked) {
+						if (b.t.hidden) {
+							hidett();
+							b.t.hidden = false;
+						} else {
+							b.locked = false;
+							b.t.hidden = true;
+						}
+
+					} else {
+						cannon_type = b.type;
+						deselect();
+						b.selected = true;
+
+					}
+					return;
+				}else{
+					if(b.t.close.gethitbox().contains(x,y)&& !b.t.hidden){hidett();return;};
+					if(b.t.hitbox().contains(x,y) && !b.t.hidden) return;
+					if(!b.t.hitbox().contains(x,y) && !b.t.hidden){hidett(); return;}
+
+				}
 
 			}
-				return;
+
+					for (Cannon c : cannons) if (c.gethitbox().contains(x, y)) return;
+					System.out.println(2);
+
+					if (buildable(x, y))
+						if (UI.money >= (Tables.balance.get("get_" + cannon_type) == null ? 10 : Tables.balance.get("get_" + cannon_type))) {
+							UI.money -= Tables.balance.get("cost_" + cannon_type) == null ? 10 : Tables.balance.get("cost_" + cannon_type);
+							cannons.add(new Cannon(cannon_type, x, y));
+						}
+					System.out.println(3);
 
 
-			}
-
-			System.out.println(1);
-			for(Cannon c:cannons) if(c.gethitbox().contains(x,y)) return;
-			System.out.println(2);
-
-			if(buildable (x,y)) if(UI.money >= Tables.balance.get("get_"+cannon_type)){
-				UI.money-=Tables.balance.get("cost_"+cannon_type);
-				cannons.add(new Cannon(cannon_type,x,y));
-			}
-			System.out.println(3);
-
-
+				}
 		}
+
+	void hidett(){
+		for (Button b : buttons) b.t.hidden = true;
 	}
 	void deselect(){
 		for (Button b:buttons) b.selected = false;

@@ -3,11 +3,15 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
+import jdk.internal.module.ModuleHashesBuilder;
+
 public class Button {
+
     int x,y,w,h;
 boolean locked = true,selected =false;
     float angle;
     String type;
+    ToolTip t;
 
     Button(String type, int x, int y){
         this.type = type;
@@ -16,6 +20,7 @@ boolean locked = true,selected =false;
         w= Tables.button_resources.get(type) == null ? 50 :  Tables.button_resources.get(type).getWidth();
         h=Tables.button_resources.get(type) == null ? 50 : Tables.button_resources.get(type).getHeight();;
         angle = 0f;
+        t=type.equals("close") ? null : new ToolTip(type,this);
 
     }
     void draw(SpriteBatch batch){
@@ -27,6 +32,7 @@ boolean locked = true,selected =false;
         if(selected){
             batch.draw(resources.selected,x-7,y-7);
         }
+        if(t!=null)t.draw(batch);
     }
     void update(){
         angle += 10f;

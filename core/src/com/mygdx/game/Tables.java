@@ -25,6 +25,7 @@ static  void init(){
     button_resources.put("pause",resources.button_pause);
     button_resources.put("start",resources.button_start);
     button_resources.put("exit",resources.button_exit);
+    button_resources.put("close",resources.button_close);
 
     zombie_resources.put("fast",resources.zombie_fast);
     zombie_resources.put("dif",resources.zombie_dif);
@@ -42,6 +43,11 @@ static  void init(){
     balance.put("hp_riot",15);
     balance.put("cols_speedy",6);
     balance.put("cols_laser",16);
+
+    balance.put("cost_fire",50);
+    balance.put("cost_double",30);
+    balance.put("cost_40",40);
+    balance.put("cost_laser",500);
 
 
 
