@@ -1,4 +1,5 @@
 package com.mygdx.game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,21 +17,23 @@ public class Cannon {
     Animation anim;
     TextureRegion[] frames;
     TextureRegion frame;
-    float frame_time =0.2f;
+    float frame_time =0.02f;
 
     Cannon(String type, int x, int y){
         sprite = new Sprite(Tables.cannon_resources.get(type) == null ? resources.cannon : Tables.cannon_resources.get(type));
         this.type = type;
+        rows = 1;
+        cols=Tables.balance.get("cols_"+type)== null? 1:Tables.balance.get("cols_"+type);
 
 
-
-        w= Tables.cannon_resources.get(type) == null ? 50 :  Tables.cannon_resources.get(type).getWidth();
-        h= Tables.cannon_resources.get(type) == null ? 50 :  Tables.cannon_resources.get(type).getHeight();
+        w= (Tables.cannon_resources.get(type) == null ? resources.cannon :  Tables.cannon_resources.get(type)).getWidth()/cols;
+        h= (Tables.cannon_resources.get(type) == null ? resources.cannon :  Tables.cannon_resources.get(type)).getHeight()/rows;
         delay = Tables.balance.get("delay_"+type)== null? 30:Tables.balance.get("delay_"+type);
         this.x = gridlock(x-w/2);
         this.y = gridlock(y-h/2);
         angle = 0f;
-        sprite.setPosition(this.x,this.y);
+        init_animations();
+
 
     }
     void draw(SpriteBatch batch){
@@ -43,8 +46,13 @@ sprite.draw(batch);
                 fire();
                 counter=0;
             }
-            sprite.setRotation(calc_angle());
+
         }
+        frame_time += Gdx.graphics.getDeltaTime();
+        frame = (TextureRegion)anim.getKeyFrame(frame_time,true);
+        sprite = new Sprite(frame);
+        sprite.setRotation(calc_angle());
+        sprite.setPosition(this.x,this.y);
     }
     float  calc_angle(){
 
@@ -55,7 +63,7 @@ sprite.draw(batch);
     }
     void init_animations(){
         // split texture into idivisual cells
-        TextureRegion[][] sheet = TextureRegion.split(Tables.zombie_resources.get(type) == null ? resources.zombie : Tables.zombie_resources.get(type),w, h);
+        TextureRegion[][] sheet = TextureRegion.split((Tables.cannon_resources.get(type) == null ? resources.cannon :  Tables.cannon_resources.get(type)),w, h);
         // init  numbers of frames to maximum number posible (all rows * cols)
         frames = new TextureRegion[rows*cols];
         // loop through texture sheet and fill frames array with cells (in order)

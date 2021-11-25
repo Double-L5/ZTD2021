@@ -24,6 +24,7 @@ String cannon_type;
 	 static ArrayList<Cannon> cannons = new ArrayList<Cannon>();
 	static ArrayList<Button> buttons = new ArrayList<Button>();
 	static ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+	static ArrayList<Effect> effects = new ArrayList<Effect>();
 
 
 	@Override
@@ -47,6 +48,7 @@ String cannon_type;
 		for(Cannon c : cannons) c.draw(batch);
 		for(Button b : buttons) b.draw(batch);
 		for(Bullet b : bullets) b.draw(batch);
+		for(Effect e : effects) e.draw(batch);
 		//zombie.draw(batch);
 
 		batch.end();
@@ -59,13 +61,14 @@ String cannon_type;
 		for(Cannon c : cannons) c.update();
 		for(Button b : buttons) b.update();
 		for(Bullet b : bullets) b.update();
+		for(Effect e : effects) e.update();
 		housekeeping();
 	}
 
 	void tap() {
 		if (Gdx.input.justTouched()) {
 			int x = Gdx.input.getX(), y = Gdx.graphics.getHeight() - Gdx.input.getY();
-
+effects.add(new Effect("click",x,y));
 			for (Button b : buttons) {
 
 
@@ -86,10 +89,10 @@ String cannon_type;
 
 					}
 					return;
-				}else{
-					if(b.t.close.gethitbox().contains(x,y)&& !b.t.hidden){hidett();return;};
-					if(b.t.hitbox().contains(x,y) && !b.t.hidden) return;
-					if(!b.t.hitbox().contains(x,y) && !b.t.hidden){hidett(); return;}
+				}else if(!b.t.hidden){
+					if(b.t.close.gethitbox().contains(x,y)){hidett();return;};
+					if(b.t.hitbox().contains(x,y) ) return;
+					if(!b.t.hitbox().contains(x,y) ){hidett(); }
 
 				}
 
@@ -134,6 +137,7 @@ String cannon_type;
 	void housekeeping(){
 		for(Zombie z : zombies) if(!z.active) { zombies.remove(z); break; }
 		for(Bullet b : bullets) if(!b.active) { bullets.remove(b); break; }
+		for(Effect e : effects) if(!e.active) { effects.remove(e); break; }
 
 	}
 	void spawn_zombies() {

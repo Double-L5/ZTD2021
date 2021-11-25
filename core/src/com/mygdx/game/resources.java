@@ -12,6 +12,7 @@ public class resources {
     static Texture button_cannon = new Texture(Gdx.files.internal("CannonIcon.png"));
     static Texture button_cannon_fire = new Texture(Gdx.files.internal("FireCannonIcon.png"));
     static Texture button_cannon_super = new Texture(Gdx.files.internal("SuperCannonIcon.png"));
+    static Texture button_cannon_Monkey = new Texture(Gdx.files.internal("SuperCannonIcon.png"));
     static Texture button_cannon_double = new Texture(Gdx.files.internal("doubleCannonIcon.png"));
     static Texture button_cannon_laser = new Texture(Gdx.files.internal("laserCannonIcon.png"));
     static Texture button_cannon_mounted = new Texture(Gdx.files.internal("mountedCannonIcon.png"));
@@ -29,6 +30,8 @@ public class resources {
     // TODO: Cannons
     static Texture cannon = new Texture(Gdx.files.internal("Cannon.png"));
     static Texture cannon_fire = new Texture(Gdx.files.internal("Firecannon.png"));
+
+    static Texture cannon_Monkey = new Texture(Gdx.files.internal("Electric_Monkey1.png"));
     static Texture cannon_super = new Texture(Gdx.files.internal("SuperCannon.png"));
     static Texture cannon_double = new Texture(Gdx.files.internal("doubleCannon.png"));
     static Texture cannon_laser = new Texture(Gdx.files.internal("laserCannon.png"));
@@ -49,4 +52,6 @@ public class resources {
     //TODO: Sounds
     static Sound sfx_bullet= Gdx.audio.newSound(Gdx.files.internal("Bullet.mp3"));
 
+    //TODO: Effects
+    static Texture click_effect = new Texture(Gdx.files.internal("click_effect.png"));
 }
