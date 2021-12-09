@@ -18,7 +18,8 @@ public class Main extends ApplicationAdapter {
 	Zombie zombie;
 
 	// CONTROL VARIABLES
-String cannon_type;
+String cannon_type = "a";
+	boolean paused;
 	// GAME LISTS
 	 static ArrayList<Zombie> zombies = new ArrayList<Zombie>();
 	 static ArrayList<Cannon> cannons = new ArrayList<Cannon>();
@@ -39,11 +40,13 @@ String cannon_type;
 
 	@Override
 	public void render () {
+
 		ScreenUtils.clear(1, 0, 0, 1);
 		update();
 		batch.begin();
 		batch.draw(resources.bg, 0, 0);
 		UI.draw(batch);
+
 		for(Zombie z : zombies) z.draw(batch);
 		for(Cannon c : cannons) c.draw(batch);
 		for(Button b : buttons) b.draw(batch);
@@ -53,26 +56,41 @@ String cannon_type;
 
 		batch.end();
 	}
-	void update(){
+	void update() {
 
 		tap();
 		spawn_zombies();
-		for(Zombie z : zombies) z.update();
-		for(Cannon c : cannons) c.update();
-		for(Button b : buttons) b.update();
-		for(Bullet b : bullets) b.update();
-		for(Effect e : effects) e.update();
-		housekeeping();
+
+		if (paused == false) {
+			for (Zombie z : zombies) z.update();
+			for (Cannon c : cannons) c.update();
+			for (Button b : buttons) b.update();
+			for (Bullet b : bullets) b.update();
+			for (Effect e : effects) e.update();
+			housekeeping();
+		}
+		else{return;}
 	}
 
 	void tap() {
 		if (Gdx.input.justTouched()) {
 			int x = Gdx.input.getX(), y = Gdx.graphics.getHeight() - Gdx.input.getY();
 effects.add(new Effect("click",x,y));
+
 			for (Button b : buttons) {
 
 
 				if (b.gethitbox().contains(x, y)) {
+					if(b.type.equals("pause")||b.type.equals("play") ) {
+
+					System.out.println("YOU CLICKED PAUSE");
+					paused = !paused;
+					b.type = paused ? "play":"pause";
+
+
+					return;
+					}
+
 					if (b.locked) {
 						if (b.t.hidden) {
 							hidett();
@@ -121,15 +139,28 @@ effects.add(new Effect("click",x,y));
 	boolean buildable(int x,int y){ return (x<1000 && ((y<200 || y>300) && y<500)); }
 
 	void setup(){
+		paused = false;
 		Tables.init();
+		//resources.Music.loop(0.3f);
 		spawn_zombies();
 
 
+
 			buttons.add(new Button("cannon",buttons.size() * 75+200,525 ));
+			buttons.get(buttons.size()-1).locked = false;
+			buttons.get(buttons.size()-1).selected = true;
 			buttons.add(new Button("double",buttons.size() * 75+200,525 ));
 			buttons.add(new Button("super",buttons.size() * 75+200,525 ));
 			buttons.add(new Button("fire",buttons.size() * 75+200,525 ));
 			buttons.add(new Button("laser",buttons.size() * 75+200,525 ));
+			buttons.add(new Button("Monkey",buttons.size() * 75+200,525 ));
+			buttons.add(new Button("flappy",buttons.size() * 75+200,525 ));
+
+
+
+			buttons.add(new Button("pause",1024-75,525 ));
+			buttons.get(buttons.size()-1).locked = false;
+			buttons.get(buttons.size()-1).selected = false;
 
 
 
@@ -153,6 +184,7 @@ effects.add(new Effect("click",x,y));
 			else if(randomnumber == 4){Zombie_type="riot";}
 			else if(randomnumber == 5){Zombie_type="zzz";}
 			else if(randomnumber == 6){Zombie_type="fast";}
+			else if(randomnumber == 7){Zombie_type="peng";}
 
 			zombies.add(new Zombie(Zombie_type,1024+i*50 ,r.nextInt(450), 1));
 

@@ -17,7 +17,8 @@ public class Cannon {
     Animation anim;
     TextureRegion[] frames;
     TextureRegion frame;
-    float frame_time =0.02f;
+    TextureRegion last_frame;
+    float frame_time =0.2f;
 
     Cannon(String type, int x, int y){
         sprite = new Sprite(Tables.cannon_resources.get(type) == null ? resources.cannon : Tables.cannon_resources.get(type));
@@ -41,24 +42,37 @@ sprite.draw(batch);
     }
     void update() {
         angle += 10f;
-        if (counter++ > delay) {
-            if (!Main.zombies.isEmpty()) {
-                fire();
-                counter=0;
-            }
 
-        }
+        if(!type.equals("laser") && counter++ > delay){if(!Main.zombies.isEmpty()) fire(); counter = 0; counter = 0;}
+
+        if(type.equals("laser")&& check_frame()) if(!Main.zombies.isEmpty()) fire();
+
         frame_time += Gdx.graphics.getDeltaTime();
         frame = (TextureRegion)anim.getKeyFrame(frame_time,true);
         sprite = new Sprite(frame);
         sprite.setRotation(calc_angle());
         sprite.setPosition(this.x,this.y);
+
+    }
+    boolean check_frame(){
+        return (last_frame == (TextureRegion)anim.getKeyFrame(frame_time,true));
     }
     float  calc_angle(){
 
+        Zombie closest = null;
+        for (Zombie z : Main.zombies) {
+            if (closest == null) {
+                closest = z;
+                continue;
+            }
+            float hyp_closest = (float)Math.sqrt(((x-closest.x)*(x-closest.x)*((y-closest.y)*(y-closest.y))));
+            float hyp_closest_z = (float)Math.sqrt(((x-z.x)*(x-z.x)*((y-z.y)*(y-z.y))));
 
-        float zx = Main.zombies.get(0).x + (float)Main.zombies.get(0).w/2, zy = Main.zombies.get(0).y+ (float)Main.zombies.get(0).h/2;
-        return (float)Math.toDegrees(Math.atan((y-zy)/(x-zx)) +(x>= zx ? Math.PI :0));
+            if (hyp_closest_z<hyp_closest)  closest = z;
+        }
+            float zx = closest.x + (float)closest.w/2, zy = closest.y+ (float)closest.h/2;
+            return (float)Math.toDegrees(Math.atan((y-zy)/(x-zx)) +(x>= zx ? Math.PI :0));
+
 
     }
     void init_animations(){
@@ -73,6 +87,8 @@ sprite.draw(batch);
                 frames[index++] = sheet[r][c];
         //initialize the animation object
         anim =new Animation(frame_time,frames);
+       if(type.equals("laser")) last_frame = (TextureRegion)anim.getKeyFrames()[anim.getKeyFrames().length - 6];
+
     }
  int gridlock(int n){
         return ((int)(n+25)/50) *50;
@@ -80,7 +96,7 @@ sprite.draw(batch);
 Rectangle gethitbox(){return new Rectangle(x,y,w,h);}
     void fire(){
         resources.sfx_bullet.play(0.2f);
-        Main.bullets.add(new Bullet("bbb", x+w/2,y+h/2));
+        Main.bullets.add(new Bullet(type , x+w/2,y+h/2));
 
     }
 
