@@ -11,12 +11,15 @@ public class resources {
     static Texture bg = new Texture(Gdx.files.internal("bg_lab.png"));
     static Texture button_cannon = new Texture(Gdx.files.internal("CannonIcon.png"));
     static Texture button_cannon_fire = new Texture(Gdx.files.internal("FireCannonIcon.png"));
+    static Texture button_cannon_toaster = new Texture(Gdx.files.internal("toasterCannonIcon.png"));
     static Texture button_cannon_super = new Texture(Gdx.files.internal("SuperCannonIcon.png"));
     static Texture button_cannon_Monkey = new Texture(Gdx.files.internal("Monke.png"));
     static Texture button_cannon_flappy = new Texture(Gdx.files.internal("Flappy_Bird_icon.png"));
     static Texture button_cannon_double = new Texture(Gdx.files.internal("doubleCannonIcon.png"));
     static Texture button_cannon_laser = new Texture(Gdx.files.internal("laserCannonIcon.png"));
     static Texture button_cannon_mounted = new Texture(Gdx.files.internal("mountedCannonIcon.png"));
+    static Texture button_wall = new Texture(Gdx.files.internal("WallIcon.png"));
+    static Texture wall = new Texture(Gdx.files.internal("Wall.png"));
     static Texture button_play = new Texture(Gdx.files.internal("play.png"));
     static Texture button_pause = new Texture(Gdx.files.internal("pause.png"));
     static Texture button_start = new Texture(Gdx.files.internal("startButton.png"));
@@ -31,6 +34,7 @@ public class resources {
     // TODO: Cannons
     static Texture cannon = new Texture(Gdx.files.internal("Cannon.png"));
     static Texture cannon_fire = new Texture(Gdx.files.internal("Firecannon.png"));
+    static Texture cannon_toaster = new Texture(Gdx.files.internal("toasterCannon.png"));
 
     static Texture cannon_Monkey = new Texture(Gdx.files.internal("Electric_Monkey1.png"));
     static Texture cannon_flappy = new Texture(Gdx.files.internal("EvilFlappyCannon.png"));
@@ -52,6 +56,7 @@ public class resources {
     // TODO: Bullets
     static Texture bullet = new Texture (Gdx.files.internal("bullet.png"));
     static Texture bullet_fire = new Texture (Gdx.files.internal("firebullet.png"));
+    static Texture bullet_toaster = new Texture (Gdx.files.internal("toastbullet.png"));
     static Texture bullet_super = new Texture (Gdx.files.internal("superbullet.png"));
     static Texture bullet_lighting = new Texture (Gdx.files.internal("Bolt.png"));
     static Texture bullet_flappy = new Texture (Gdx.files.internal("FlappyBullet.png"));

@@ -17,6 +17,9 @@ public class Main extends ApplicationAdapter {
 
 	Zombie zombie;
 
+
+
+boolean active;
 	// CONTROL VARIABLES
 String cannon_type = "a";
 	boolean paused;
@@ -26,6 +29,7 @@ String cannon_type = "a";
 	static ArrayList<Button> buttons = new ArrayList<Button>();
 	static ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	static ArrayList<Effect> effects = new ArrayList<Effect>();
+	static ArrayList<Wall> walls = new ArrayList<Wall>();
 
 
 	@Override
@@ -52,6 +56,7 @@ String cannon_type = "a";
 		for(Button b : buttons) b.draw(batch);
 		for(Bullet b : bullets) b.draw(batch);
 		for(Effect e : effects) e.draw(batch);
+		for(Wall w : walls) w.draw(batch);
 		//zombie.draw(batch);
 
 		batch.end();
@@ -61,12 +66,16 @@ String cannon_type = "a";
 		tap();
 		spawn_zombies();
 
+
+
+
 		if (paused == false) {
 			for (Zombie z : zombies) z.update();
 			for (Cannon c : cannons) c.update();
 			for (Button b : buttons) b.update();
 			for (Bullet b : bullets) b.update();
 			for (Effect e : effects) e.update();
+			for (Wall w : walls) w.update();
 			housekeeping();
 		}
 		else{return;}
@@ -96,6 +105,9 @@ effects.add(new Effect("click",x,y));
 							hidett();
 							b.t.hidden = false;
 						} else {
+							if(UI.money >= (Tables.balance.get("unlock_"+b.type)== null ?0:(Tables.balance.get("unlock_"+b.type))))
+								UI.money -= (Tables.balance.get("unlock_"+b.type)== null ?0:(Tables.balance.get("unlock_"+b.type)));
+							else return;
 							b.locked = false;
 							b.t.hidden = true;
 						}
@@ -115,7 +127,10 @@ effects.add(new Effect("click",x,y));
 				}
 
 			}
-
+				if(walls.size()<3&& cannon_type.equals("wall")|| cannon_type.equals("mounted")){
+					walls.add(new Wall(x,0,cannon_type.equals("mounted")));
+					return;
+			}
 					for (Cannon c : cannons) if (c.gethitbox().contains(x, y)) return;
 					System.out.println(2);
 
@@ -155,8 +170,11 @@ effects.add(new Effect("click",x,y));
 			buttons.add(new Button("laser",buttons.size() * 75+200,525 ));
 			buttons.add(new Button("Monkey",buttons.size() * 75+200,525 ));
 			buttons.add(new Button("flappy",buttons.size() * 75+200,525 ));
-
-
+			buttons.add(new Button("toaster",buttons.size() * 75+200,525 ));
+			buttons.add(new Button("wall",buttons.size() * 75+200,525 ));
+			buttons.get(buttons.size()-1).locked = false;
+			buttons.get(buttons.size()-1).selected = false;
+		buttons.add(new Button("mounted",buttons.size() * 75+200,525 ));
 
 			buttons.add(new Button("pause",1024-75,525 ));
 			buttons.get(buttons.size()-1).locked = false;
@@ -169,6 +187,9 @@ effects.add(new Effect("click",x,y));
 		for(Zombie z : zombies) if(!z.active) { zombies.remove(z); break; }
 		for(Bullet b : bullets) if(!b.active) { bullets.remove(b); break; }
 		for(Effect e : effects) if(!e.active) { effects.remove(e); break; }
+		for(Cannon c : cannons) if(!c.active) { cannons.remove(c); break; }
+		for(Wall w : walls) if(!w.active) { walls.remove(w); break; }
+
 
 	}
 	void spawn_zombies() {

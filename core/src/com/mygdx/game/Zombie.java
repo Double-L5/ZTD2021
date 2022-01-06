@@ -47,7 +47,11 @@ public class Zombie {
     void update(){
 
         x -= speed;
-
+if (hp<= 0){
+    UI.score+= 1;
+    UI.money += 5;
+}
+UI.life-= x+w>0 ?0 :1;
         active = x+w>0 && hp>0;
     }
     void init_animations(){

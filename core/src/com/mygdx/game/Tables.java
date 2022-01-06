@@ -13,6 +13,7 @@ public class Tables {
     static HashMap<String, Texture> Resources = new HashMap<String,Texture>();
 static  void init(){
     cannon_resources.put("fire",resources.cannon_fire);
+    cannon_resources.put("toaster",resources.cannon_toaster);
     cannon_resources.put("super",resources.cannon_super);
     cannon_resources.put("laser",resources.cannon_laser);
     cannon_resources.put("double",resources.cannon_double);
@@ -21,10 +22,12 @@ static  void init(){
     cannon_resources.put("flappy",resources.cannon_flappy);
 
     button_resources.put("fire",resources.button_cannon_fire);
+    button_resources.put("toaster",resources.button_cannon_toaster);
     button_resources.put("super",resources.button_cannon_super);
     button_resources.put("laser",resources.button_cannon_laser);
     button_resources.put("double",resources.button_cannon_double);
     button_resources.put("mounted",resources.button_cannon_mounted);
+    button_resources.put("wall",resources.button_wall);
     button_resources.put("Monkey",resources.button_cannon_Monkey);
     button_resources.put("flappy",resources.button_cannon_flappy);
     button_resources.put("play",resources.button_play);
@@ -42,6 +45,7 @@ Resources.put("effect_click",resources.click_effect);
 Resources.put("bullet_lightning",resources.bullet_lighting);
 Resources.put("bullet_flappy",resources.bullet_flappy);
 Resources.put("bullet_fire",resources.bullet_fire);
+Resources.put("bullet_toaster",resources.bullet_toaster);
 Resources.put("bullet_super",resources.bullet_super);
     //tooltip information
     tooltips.put("fire", "Fires high damage bullets at a high rate of fire.");
@@ -52,6 +56,7 @@ Resources.put("bullet_super",resources.bullet_super);
 
 
     balance.put("delay_fire",15);
+    balance.put("delay_fire",20);
     balance.put("delay_double",45);
     balance.put("speed_fast",3);
     balance.put("speed_speedy",5);
@@ -65,11 +70,16 @@ Resources.put("bullet_super",resources.bullet_super);
 
 //placement costs
     balance.put("cost_fire",50);
+    balance.put("hp_fire",400);
+    balance.put("hp_toaster",350);
+    balance.put("hp_double",200);
+    balance.put("cost_toaster",30);
     balance.put("cost_double",30);
     balance.put("cost_40",40);
     balance.put("cost_laser",500);
     //unlock costs
     balance.put("unlock_fire",300);
+    balance.put("unlock_toaster",250);
     balance.put("unlock_double",250);
     balance.put("unlock_super",500);
     balance.put("unlock_laser",510);
